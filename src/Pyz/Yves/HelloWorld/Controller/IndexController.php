@@ -14,7 +14,7 @@ class IndexController extends AbstractController
      * @return View
      */
     public function indexAction(Request $request): View {
-        $data = ['helloWorld' => 'Silent Revelations by Leprous is amazing!'];
+        $data = ['helloWorld' => 'Listening to Anathema'];
 
         return $this->view(
             $data,

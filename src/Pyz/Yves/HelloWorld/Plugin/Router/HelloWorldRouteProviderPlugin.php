@@ -33,7 +33,7 @@ class HelloWorldRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addHelloWorldIndexRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/aabbcc', 'HelloWorld', 'Index', 'indexAction');
+        $route = $this->buildRoute('/hello-world', 'HelloWorld', 'Index', 'indexAction');
         $routeCollection->add(static::ROUTE_HELLO_WORLD_INDEX, $route);
 
         return $routeCollection;
