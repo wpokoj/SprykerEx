@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
+    <!-- Used as example XML for OMS implementation -->
+
+    <process name="DFA" main="true">
+        <states>
+            <state name="new" />
+            <state name="paid" />
+            <state name="unauthorized" />
+            <state name="shipped" />
+            <state name="returned" />
+            <state name="refunded" />
+            <state name="closed" />
+            <state name="cycleA" />
+            <state name="cycleB" />
+            <state name="cycleC" />
+
+            <state name="calc" />
+            <state name='arg1' />
+            <state name='arg2' />
+            <state name='arg3' />
+            <state name='res2' />
+            <state name='res3' />
+            <state name='res4' />
+            <state name='res5' />
+            <state name='res6' />
+        </states>
+
+        <transitions>
+            <transition condition="DFA/IsAuthorized">
+                <source>new</source>
+                <target>paid</target>
+                <event>pay</event>
+            </transition>
+
+            <transition>
+                <source>paid</source>
+                <target>shipped</target>
+                <event>ship</event>
+            </transition>
+
+            <transition>
+                <source>shipped</source>
+                <target>returned</target>
+                <event>return</event>
+            </transition>
+
+            <transition>
+                <source>shipped</source>
+                <target>cycleA</target>
+                <event>eventA</event>
+            </transition>
+
+            <transition>
+                <source>cycleA</source>
+                <target>cycleB</target>
+                <event>eventB</event>
+            </transition>
+
+            <transition>
+                <source>cycleB</source>
+                <target>shipped</target>
+                <event>eventC</event>
+            </transition>
+
+            <transition>
+                <source>shipped</source>
+                <target>cycleA</target>
+                <event>eventA</event>
+            </transition>
+
+            <transition>
+                <source>returned</source>
+                <target>refunded</target>
+                <event>refund</event>
+            </transition>
+
+            <transition>
+                <source>shipped</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+
+            <transition>
+                <source>refunded</source>
+                <target>closed</target>
+                <event>close after refund</event>
+            </transition>
+
+            <transition>
+                <source>new</source>
+                <target>unauthorized</target>
+                <event>pay</event>
+            </transition>
+
+            <transition>
+                <source>calc</source>
+                <target>arg1</target>
+                <event>sel1</event>
+            </transition>
+
+            <transition>
+                <source>calc</source>
+                <target>arg2</target>
+                <event>sel2</event>
+            </transition>
+
+            <transition>
+                <source>calc</source>
+                <target>arg3</target>
+                <event>sel3</event>
+            </transition>
+
+            <transition>
+                <source>arg1</source>
+                <target>res2</target>
+                <event>sel1</event>
+            </transition>
+
+            <transition>
+                <source>arg1</source>
+                <target>res3</target>
+                <event>sel2</event>
+            </transition>
+
+            <transition>
+                <source>arg1</source>
+                <target>res4</target>
+                <event>sel3</event>
+            </transition>
+
+            <transition>
+                <source>arg2</source>
+                <target>res3</target>
+                <event>sel1</event>
+            </transition>
+
+            <transition>
+                <source>arg2</source>
+                <target>res4</target>
+                <event>sel2</event>
+            </transition>
+
+            <transition>
+                <source>arg2</source>
+                <target>res5</target>
+                <event>sel3</event>
+            </transition>
+
+            <transition>
+                <source>arg3</source>
+                <target>res4</target>
+                <event>sel1</event>
+            </transition>
+
+            <transition>
+                <source>arg3</source>
+                <target>res5</target>
+                <event>sel2</event>
+            </transition>
+
+            <transition>
+                <source>arg3</source>
+                <target>res6</target>
+                <event>sel3</event>
+            </transition>
+
+            <transition>
+                <source>res2</source>
+                <target>shipped</target>
+                <event>return</event>
+            </transition>
+
+            <transition>
+                <source>res3</source>
+                <target>shipped</target>
+                <event>return</event>
+            </transition>
+
+            <transition>
+                <source>res4</source>
+                <target>shipped</target>
+                <event>return</event>
+            </transition>
+
+            <transition>
+                <source>res5</source>
+                <target>shipped</target>
+                <event>return</event>
+            </transition>
+
+            <transition>
+                <source>res6</source>
+                <target>shipped</target>
+                <event>return</event>
+            </transition>
+
+            <transition>
+                <source>shipped</source>
+                <target>calc</target>
+                <event>calc</event>
+            </transition>
+
+        </transitions>
+
+        <events>
+            <event name="pay" onEnter="true" command="DFA/Pay" />
+            <event name="ship" manual="true" />
+            <event name="return" manual="true" />
+            <event name="eventA" manual="true" timeout="1 minute" />
+            <event name="eventB" manual="true" timeout="1 minute" />
+            <event name="eventC" manual="true" timeout="1 minute" />
+            <event name="refund" onEnter="true" />
+            <event name="close" timeout="14 days" />
+            <event name="close after refund" onEnter="true" />
+
+            <event name="sel1" manual="true" />
+            <event name="sel2" manual="true" />
+            <event name="sel3" manual="true" />
+            <event name="calc" manual="true" />
+        </events>
+    </process>
+</statemachine>

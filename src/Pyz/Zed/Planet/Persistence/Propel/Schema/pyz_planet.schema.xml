@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\Planet\Persistence"  package="src.Orm.Zed.Planet.Persistence">
+    <table name="pyz_planet" phpName="PyzPlanet">
+        <column name="id_planet" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" type="VARCHAR" size="50"/>
+        <column name="interesting_fact" type="VARCHAR" size="255"/>
+    </table>
+</database>
