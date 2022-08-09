@@ -8,8 +8,9 @@
         widget_title: 'List of planets'
     } %}
         {% block widget_content %}
-            {{ planetTable | raw }}
-            <a href="/planet/add"> Add new planet</a>
+            {{ name }}<br>
+            {{ fact }}<br>
+            <a href="/planet/list"> Return </a>
         {% endblock %}
 
     {% endembed %}

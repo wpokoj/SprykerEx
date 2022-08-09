@@ -8,10 +8,13 @@
         widget_title: 'List of planets'
     } %}
         {% block widget_content %}
-            {{ planetTable | raw }}
-            <a href="/planet/add"> Add new planet</a>
+            <form method="post" action="/planet/add/req">
+                Name: <input type="text" name="planetName"><br>
+                Fact: <input type="text" name="fact"><br>
+                <input type="submit" value="Submit Data"><br>
+            </form>
         {% endblock %}
 
     {% endembed %}
-
+    <a href="/planet/add"> Add new planet</a>
 {% endblock %}
