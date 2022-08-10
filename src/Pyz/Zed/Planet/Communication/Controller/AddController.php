@@ -21,6 +21,14 @@ class AddController extends AbstractController {
         $name = $request->request->get('planetName');
         $fact = $request->request->get('fact');
 
+        if($name == '' || $fact == '') {
+            return [
+                'error' => 'Cannot add empty entry!',
+                'name' => $name,
+                'fact' => $fact,
+            ];
+        }
+
         $transfer = new PyzPlanetEntityTransfer();
         $transfer->setName($name);
         $transfer->setInterestingFact($fact);

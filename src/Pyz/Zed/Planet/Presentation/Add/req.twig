@@ -8,6 +8,10 @@
         widget_title: 'List of planets'
     } %}
         {% block widget_content %}
+            {% if error is defined %}
+                <span style="color: red"> {{ error }} </span><br>
+            {% endif %}
+
             {{ name }}<br>
             {{ fact }}<br>
             <a href="/planet/list"> Return </a>
