@@ -20,14 +20,14 @@ class CreateController extends AbstractController {
 
             $data = ($planetForm->getData());
 
-            assert($data instanceof PlanetTransfer);
+            //assert($data instanceof PlanetTransfer);
 
-            $transfer = new PyzPlanetEntityTransfer();
-            $transfer->fromArray($data->toArray());
+            //$transfer = new PyzPlanetEntityTransfer();
+            //$transfer->fromArray($data->toArray());
 
             //die();
 
-            $transfer = $this->getFacade()->createPlanetEntity($transfer);
+            $transfer = $this->getFacade()->createPlanetEntity($data);
 
             $this->addSuccessMessage('Planet was created.');
             return $this->redirectResponse('/planet/list');

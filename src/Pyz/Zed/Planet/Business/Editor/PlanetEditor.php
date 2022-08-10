@@ -1,12 +1,12 @@
 <?php
 
-namespace Pyz\Zed\Planet\Business\Writer;
+namespace Pyz\Zed\Planet\Business\Editor;
 
 use Generated\Shared\Transfer\PlanetTransfer;
-use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Pyz\Zed\Planet\Persistence\PlanetEntityManagerInterface;
 
-class PlanetWriter implements PlanetWriterInterface {
+class PlanetEditor implements PlanetEditorInterface {
+
     protected PlanetEntityManagerInterface $entityManager;
 
     public function __construct(PlanetEntityManagerInterface $entityManager) {
@@ -14,8 +14,9 @@ class PlanetWriter implements PlanetWriterInterface {
         $this->entityManager = $entityManager;
     }
 
-    public function savePlanetEntity(PlanetTransfer $transfer) : PlanetTransfer {
+    public function editPlanetEntity(PlanetTransfer $transfer): PlanetTransfer {
 
-        return $this->entityManager->saveEntity($transfer);
+        return $this->entityManager->editEntity($transfer);
     }
+
 }

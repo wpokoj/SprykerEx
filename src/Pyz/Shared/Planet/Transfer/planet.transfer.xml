@@ -6,5 +6,6 @@
         <property name="idPlanet" type="int"/>
         <property name="name" type="string"/>
         <property name="interestingFact" type="string"/>
+        <property name="orbitTime" type="int"/>
     </transfer>
 </transfers>

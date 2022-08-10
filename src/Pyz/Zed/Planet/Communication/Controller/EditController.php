@@ -3,6 +3,8 @@
 namespace Pyz\Zed\Planet\Communication\Controller;
 
 use Generated\Shared\Transfer\PlanetTransfer;
+use Pyz\Zed\Planet\Persistence\PlanetEntityManager;
+use Pyz\Zed\Planet\Persistence\PlanetRepository;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,16 +23,24 @@ class EditController extends AbstractController
     {
         $idPlanet = $this->castId($request->query->get('id-planet'));
 
-        $planetTransfer = (new PlanetTransfer()) // TODO add business logic to retrieve Planet by id
-            ->setName('Jupiter')
-            ->setInterestingFact('Fifth planet from the Sun and the largest in the Solar System.');
+        $planetTransfer = $this->getFacade()->findPlanetEntity($idPlanet);
+
+        if($planetTransfer === null) {
+            $this->addErrorMessage('Planet with id = '.$idPlanet.' not found!');
+            return $this->redirectResponse('/planet/list');
+        }
 
         $planetForm = $this->getFactory()
             ->createPlanetForm($planetTransfer)
             ->handleRequest($request);
 
         if ($planetForm->isSubmitted() && $planetForm->isValid()) {
-            $this->addSuccessMessage('Planet was updated. Well not yet :)');
+
+            $this->getFacade()->editPlanetEntity($planetForm->getData());
+
+            //(new PlanetEntityManager())->editEntity($planetForm->getData());
+
+            $this->addSuccessMessage('Planet was updated.');
             return $this->redirectResponse('/planet/list');
         }
 

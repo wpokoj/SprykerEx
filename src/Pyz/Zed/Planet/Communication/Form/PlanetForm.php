@@ -4,6 +4,7 @@ namespace Pyz\Zed\Planet\Communication\Form;
 
 use Generated\Shared\Transfer\PlanetTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +16,7 @@ class PlanetForm extends AbstractType {
 
     private const FIELD_NAME = 'name';
     private const FIELD_INTERESTING_FACT = 'interesting_fact';
+    private const FIELD_ORBIT_TIME = 'orbit_time';
     private const BUTTON_SUBMIT = 'Submit';
 
     public function getBlockPrefix() {
@@ -39,6 +41,7 @@ class PlanetForm extends AbstractType {
         $this
             ->addNameField($builder)
             ->addInterestingFactField($builder)
+            ->addOrbitTimeField($builder)
             ->addSubmitButton($builder);
     }
 
@@ -72,6 +75,21 @@ class PlanetForm extends AbstractType {
                     'min' => 15,
                     'minMessage' => 'Interesting fact minimum length is at least {{ limit }}',
                 ]),
+            ]
+        ]);
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    private function addOrbitTimeField(FormBuilderInterface $builder): PlanetForm
+    {
+        $builder->add(static::FIELD_ORBIT_TIME, IntegerType::class, [
+            'constraints' => [
+                new NotBlank()
             ]
         ]);
         return $this;
