@@ -23,12 +23,8 @@ class PlanetEntityManager extends AbstractEntityManager implements PlanetEntityM
 
     public function editEntity(PlanetTransfer  $transfer) : PlanetTransfer {
 
-        /*$ent = new PyzPlanet();
-        $ent->fromArray($transfer->toArray())
-        $ent->postUpdate();
-        $ent->save();*/
 
-        $res = $this
+        /*$res = $this
             ->getFactory()
             ->createPlanetQuery()
             ->filterByIdPlanet($transfer->getIdPlanet())
@@ -36,7 +32,18 @@ class PlanetEntityManager extends AbstractEntityManager implements PlanetEntityM
                 'InterestingFact'   => $transfer->getInterestingFact(),
                 'OrbitTime'         => $transfer->getOrbitTime(),
                 'Name'              => $transfer->getName(),
-            ]);
+            ]);*/
+
+        $planetEntity =
+            $this
+            ->getFactory()
+            ->createPlanetQuery()
+            ->filterByIdPlanet($transfer->getIdPlanet())
+            ->findOneOrCreate();
+
+
+        $planetEntity->fromArray($transfer->toArray());
+        $planetEntity->save();
 
         return $transfer;
     }

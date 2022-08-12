@@ -3,6 +3,7 @@
 namespace Pyz\Zed\Planet\Communication\Controller;
 
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
+use Pyz\Zed\Planet\Communication\Other\WaveFunctionCollapse;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,10 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 class AddController extends AbstractController {
 
     public function indexAction() {
+        (new WaveFunctionCollapse())->render();
         return [];
     }
 
     public function reqAction(Request $request) {
+
+
 
         //var_dump($request);
         //die();

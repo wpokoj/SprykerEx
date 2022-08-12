@@ -7,6 +7,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
+use Spryker\Zed\ProductRelationGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
 
 class PlanetTable extends AbstractTable {
@@ -75,7 +76,7 @@ class PlanetTable extends AbstractTable {
                     $planetDataItem[PyzPlanetTableMap::COL_ORBIT_TIME],
                 PyzPlanetTableMap::COL_INTERESTING_FACT =>
                     $planetDataItem[PyzPlanetTableMap:: COL_INTERESTING_FACT],
-                static::COL_ACTIONS =>
+                static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
                     '<a href="/planet/edit/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Edit</a>'.
                     '<a href="/planet/delete/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Delete</a>'
             ];
@@ -88,6 +89,39 @@ class PlanetTable extends AbstractTable {
 
     protected function generateActions(int $id): string {
 
-        return '';
+        return implode(' ', [
+            $this->createEditButton($id),
+            //$this->createDeleteButton($id),
+        ]);
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return string
+     */
+    protected function createEditButton(int $id): string {
+        return $this->generateViewButton(
+            Url::generate(
+                '/planet/edit/index', [
+                    'id-planet' => $id,
+                ]),
+            'Edit'
+        );
+    }
+
+    /**
+     * @param int $idProductRelation
+     *
+     * @return string
+     */
+    protected function createDeleteButton(int $id): string {
+        return $this->generateEditButton(
+            Url::generate(
+                '/planet/delete/index', [
+                'id-planet' => $id,
+            ]),
+            'Delete'
+        );
     }
 }
