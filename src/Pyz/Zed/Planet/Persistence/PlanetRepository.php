@@ -49,13 +49,13 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
         die();
     }
 
-    public function moonPlanetGetById($planetId) : array {
+    public function moonPlanetGetById($planetId) : ObjectCollection {
 
         $res = new PyzPlanetQuery();
 
-        $data = $res->filterByIdPlanet($planetId)->leftJoinWithPyzMoon()->find();
+        return $data = $res->filterByIdPlanet($planetId)->leftJoinWithPyzMoon()->find();
 
-        echo 'Data:<br><br>';
+        //echo 'Data:<br><br>';
         //var_dump($data->toArray());
         //die();
 

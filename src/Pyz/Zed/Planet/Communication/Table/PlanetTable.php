@@ -3,11 +3,13 @@
 namespace Pyz\Zed\Planet\Communication\Table;
 
 use Generated\Shared\Transfer\MoonTransfer;
+use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\PyzMoonEntityTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Orm\Zed\Planet\Persistence\Map\PyzMoonTableMap;
 use Orm\Zed\Planet\Persistence\Map\PyzPlanetTableMap;
 use Orm\Zed\Planet\Persistence\PyzMoonQuery;
+use Pyz\Zed\Planet\Persistence\PlanetRepository;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -112,20 +114,28 @@ class PlanetTable extends AbstractTable {
 
         try {
 
-            $moons = (new PyzMoonQuery())
-                ->filterByIdPlanet($planetId)
-                ->find();
+            /*$moons = ($this->planetQuery)
+                ->joinWithPyzMoon()
+                //->filterByIdPlanet($planetId)
+                ->find();*/
 
-            $data = $moons->toArray();
+            $moons = (new PlanetRepository())->moonPlanetGetById($planetId);
 
-            if(count($data) === 0) {
+            $data = (new PlanetTransfer())->fromArray(($moons->toArray())[0]);
+
+            //var_dump($data);
+            //die();
+
+            if(count($data->getPyzMoons()) === 0) {
                 return '';
             }
 
             $list = '<select>';
 
-            foreach ($data as $moon) {
-                $list = $list.'<option>'.(new PyzMoonEntityTransfer())->fromArray($moon)->getName().'</option>';
+            //var_dump($data); die();
+
+            foreach ($data->getPyzMoons() as $moon) {
+                $list = $list.'<option>'.($moon)->getName().'</option>';
             }
 
             return $list.'</select>';
