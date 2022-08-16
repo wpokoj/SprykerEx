@@ -2,6 +2,7 @@
 
 namespace Pyz\Zed\Planet\Communication\Controller;
 
+use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Orm\Zed\Planet\Persistence\PyzPlanet;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
@@ -19,21 +20,30 @@ class AddController extends AbstractController {
         //(new WaveFunctionCollapse())->render();
 
         //var_dump((new PlanetTable(new PyzPlanetQuery()))->createMoonDropdown(7,new PyzPlanetQuery()));
-        die();
+        //die();
 
-        $data = (new PlanetRepository())->moonPlanetGet();
+        //$data = (new PlanetRepository())->moonPlanetGetById(7);
 
-        print_r($arr = $data->toArray());
+        //print_r($arr = $data);
 
-        foreach ($arr as $planet) {
+        /*foreach ($arr as $planet) {
 
             //$trans = (new PyzPlanetEntityTransfer())->fromArray($planet);
-
-
             echo '<br><br>';
             print_r($planet);
+        }*/
 
-        }
+        var_dump($data = (new PyzPlanetQuery())->leftJoinWithPyzMoon()->find()->toArray());
+
+        echo '<br><br>';
+
+        var_dump((new PlanetTransfer())->fromArray($data[0])->getPyzMoons());
+
+        echo '<br><br>';
+
+        var_dump((new PyzPlanetEntityTransfer())->fromArray($data[0])->getPyzMoons());
+
+        die();
 
         return [];
     }

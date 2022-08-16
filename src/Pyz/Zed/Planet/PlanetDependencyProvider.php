@@ -2,6 +2,7 @@
 
 namespace Pyz\Zed\Planet;
 
+use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -9,6 +10,7 @@ use Spryker\Zed\Kernel\Container;
 class PlanetDependencyProvider extends AbstractBundleDependencyProvider{
 
     public const QUERY_PLANET = 'QUERY_PLANET';
+    public const QUERY_MOON   = 'QUERY_MOON';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +40,13 @@ class PlanetDependencyProvider extends AbstractBundleDependencyProvider{
             static::QUERY_PLANET,
             $container->factory(
                 fn() => PyzPlanetQuery::create()
+            )
+        );
+
+        $container->set(
+            static::QUERY_MOON,
+            $container->factory(
+                fn() => PyzMoonQuery::create()
             )
         );
 

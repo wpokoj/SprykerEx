@@ -48,4 +48,26 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
         var_dump($data);
         die();
     }
+
+    public function moonPlanetGetById($planetId) : array {
+
+        $res = new PyzPlanetQuery();
+
+        $data = $res->filterByIdPlanet($planetId)->leftJoinWithPyzMoon()->find();
+
+        echo 'Data:<br><br>';
+        //var_dump($data->toArray());
+        //die();
+
+
+        $res = [];
+
+        foreach($data->toArray() as $entry) {
+            $res[] = (new PyzPlanetEntityTransfer())->fromArray($entry);
+        }
+
+        return $res;
+
+
+    }
 }

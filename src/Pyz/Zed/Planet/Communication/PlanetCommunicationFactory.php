@@ -3,8 +3,10 @@
 namespace Pyz\Zed\Planet\Communication;
 
 use Generated\Shared\Transfer\PlanetTransfer;
+use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
 use Pyz\Zed\Planet\Communication\Form\PlanetForm;
+use Pyz\Zed\Planet\Communication\Table\MoonTable;
 use Pyz\Zed\Planet\PlanetDependencyProvider;
 use Pyz\Zed\Planet\Communication\Table\PlanetTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -23,6 +25,13 @@ class PlanetCommunicationFactory extends AbstractCommunicationFactory {
     public function createPlanetTable(): PlanetTable {
         return new PlanetTable($this->getPlanetPropelQuery());
     }
+    /**
+     * @return \Pyz\Zed\Planet\Communication\Table\MoonTable
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createMoonTable(): MoonTable {
+        return new MoonTable($this->getMoonPropelQuery());
+    }
 
     /**
      * @return \Orm\Zed\Planet\Persistence\PyzPlanetQuery
@@ -30,6 +39,14 @@ class PlanetCommunicationFactory extends AbstractCommunicationFactory {
      */
     private function getPlanetPropelQuery(): PyzPlanetQuery {
         return $this->getProvidedDependency(PlanetDependencyProvider::QUERY_PLANET);
+    }
+
+    /**
+     * @return \Orm\Zed\Planet\Persistence\PyzMoonQuery
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    private function getMoonPropelQuery(): PyzMoonQuery {
+        return $this->getProvidedDependency(PlanetDependencyProvider::QUERY_MOON);
     }
 
     /**
