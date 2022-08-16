@@ -2,7 +2,11 @@
 
 namespace Pyz\Zed\Planet\Communication\Table;
 
+use Generated\Shared\Transfer\PyzMoonEntityTransfer;
+use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
+use Orm\Zed\Planet\Persistence\Map\PyzMoonTableMap;
 use Orm\Zed\Planet\Persistence\Map\PyzPlanetTableMap;
+use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -13,6 +17,7 @@ use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
 class PlanetTable extends AbstractTable {
 
     const COL_ACTIONS = 'Actions';
+    const COL_MOONS = 'Moons';
 
     /** @var PyzPlanetQuery
      */
@@ -23,6 +28,9 @@ class PlanetTable extends AbstractTable {
      */
     public function __construct(PyzPlanetQuery $planetQuery) {
         $this->planetQuery = $planetQuery;
+
+        //var_dump($planetQuery);
+        //die();
     }
 
     /**
@@ -31,26 +39,29 @@ class PlanetTable extends AbstractTable {
      * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config): TableConfiguration  {
+
         $config->setHeader([
             PyzPlanetTableMap::COL_ID_PLANET => 'Planet ID',
             PyzPlanetTableMap::COL_NAME => 'Planet name',
             PyzPlanetTableMap::COL_ORBIT_TIME => 'Orbit time',
             PyzPlanetTableMap::COL_INTERESTING_FACT => 'Interesting fact',
+            static::COL_MOONS => static::COL_MOONS,
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 
         $config->setSortable([
             PyzPlanetTableMap::COL_ID_PLANET,
             PyzPlanetTableMap::COL_NAME,
-            PyzPlanetTableMap::COL_INTERESTING_FACT
+            PyzPlanetTableMap::COL_INTERESTING_FACT,
         ]);
 
         $config->setSearchable([
-            PyzPlanetTableMap::COL_NAME
+            PyzPlanetTableMap::COL_NAME,
         ]);
 
         $config->setRawColumns([
             static::COL_ACTIONS,
+            static::COL_MOONS,
         ]);
 
         return $config;
@@ -62,6 +73,9 @@ class PlanetTable extends AbstractTable {
      * @return array
      */
     protected function prepareData(TableConfiguration $config) : array {
+
+        //var_dump($config);
+        //die();
 
         $planetDataItems = $this->runQuery($this->planetQuery, $config);
         $planetTableRows = [];
@@ -76,6 +90,8 @@ class PlanetTable extends AbstractTable {
                     $planetDataItem[PyzPlanetTableMap::COL_ORBIT_TIME],
                 PyzPlanetTableMap::COL_INTERESTING_FACT =>
                     $planetDataItem[PyzPlanetTableMap:: COL_INTERESTING_FACT],
+                static::COL_MOONS => //'',
+                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
                 static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
                     '<a href="/planet/edit/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Edit</a>'.
                     '<a href="/planet/delete/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Delete</a>'
@@ -86,6 +102,28 @@ class PlanetTable extends AbstractTable {
 
         //return $this->runQuery($this->planetQuery, $config);
     }
+
+    protected function createMoonDropdown(int $planetId): string {
+
+        try {
+
+            $moons = (new PyzMoonQuery())
+                ->filterByIdPlanet($planetId)
+                ->find();
+
+            $list = '';
+
+            foreach ($moons->toArray() as $moon) {
+                $list = $list. (new PyzMoonEntityTransfer())->fromArray($moon)->getName().'<br>';
+            }
+
+            return $list;
+        }
+        catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
 
     protected function generateActions(int $id): string {
 
