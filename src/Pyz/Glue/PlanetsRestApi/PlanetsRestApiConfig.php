@@ -7,5 +7,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class PlanetsRestApiConfig extends AbstractBundleConfig {
 
     public const RESOURCE_PLANETS = 'planets';
+    public const RESOURCE_MOONS = 'moons';
 
 }

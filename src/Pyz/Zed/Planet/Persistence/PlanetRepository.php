@@ -33,11 +33,19 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
 
     public function findPlanets() : ObjectCollection {
 
-        return $this
+        $data = $this
             ->getFactory()
             ->createPlanetQuery()
-            ->leftJoinWithPyzMoon()
+            ->joinWithPyzMoon()
             ->find();
+
+
+
+        //var_dump($data->getData());
+        //die()
+        //;
+
+        return $data;
     }
 
     public function moonPlanetGet() : array {

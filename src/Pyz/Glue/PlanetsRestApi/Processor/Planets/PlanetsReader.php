@@ -55,7 +55,7 @@ class PlanetsReader implements PlanetsReaderInterface
             $restResource = $this->restResourceBuilder->createRestResource(
                 PlanetsRestApiConfig::RESOURCE_PLANETS,
                 $planetTransfer->getIdPlanet(),
-                $this->planetMapper->mapPlanetDataToPlanetRestAttributes($planetTransfer->toArray())
+                $this->planetMapper->mapPlanetDataToPlanetRestAttributes($planetTransfer)
             );
             $restResponse->addResource($restResource);
         }

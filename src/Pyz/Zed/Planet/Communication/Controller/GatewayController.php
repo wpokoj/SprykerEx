@@ -2,6 +2,7 @@
 
 namespace Pyz\Zed\Planet\Communication\Controller;
 
+use Generated\Shared\Transfer\MoonTransfer;
 use Generated\Shared\Transfer\PlanetCollectionTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\RestPlanetsResponseAttributesTransfer;
@@ -30,17 +31,30 @@ class GatewayController extends AbstractGatewayController {
             return new PlanetCollectionTransfer();
 
         foreach ($data->getData() as $planet) {
-            $res->addPlanet(
-                (new PlanetTransfer())
-                    ->fromArray(
-                        $planet->toArray(),
-                        true
-                    )
-            );
+            /*$res->addPlanet*///var_dump(
+            $planetTrans = (new PlanetTransfer())
+                ->fromArray(
+                    $planet->toArray(),
+
+                );
+
+            $moons = $planet->getPyzMoons();
+
+            foreach ($moons->getData() as $moon) {
+                $planetTrans->addPyzMoons((new MoonTransfer())->fromArray($moon->toArray()));
+            }
+
+            //echo '<br><br>';
+
+            $res->addPlanet($planetTrans);
+
+
+            //);
         }
 
+        //var_dump($res); die();
         return $res;
 
-        return new PlanetCollectionTransfer();
+        //return new PlanetCollectionTransfer();
     }
 }

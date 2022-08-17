@@ -2,6 +2,7 @@
 
 namespace Pyz\Zed\Planet\Communication\Controller;
 
+use Generated\Shared\Transfer\PlanetCollectionTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Orm\Zed\Planet\Persistence\PyzPlanet;
@@ -17,6 +18,12 @@ use Propel\Runtime\Collection\ObjectCollection;
 class AddController extends AbstractController {
 
     public function indexAction() {
+
+        (new GatewayController())->getPlanetCollectionAction(new PlanetCollectionTransfer());
+
+        //var_dump((new PlanetRepository())->findPlanets());
+        //die();
+
         //(new WaveFunctionCollapse())->render();
 
         //var_dump((new PlanetTable(new PyzPlanetQuery()))->createMoonDropdown(7,new PyzPlanetQuery()));
