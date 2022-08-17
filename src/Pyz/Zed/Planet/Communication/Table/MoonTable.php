@@ -46,7 +46,7 @@ class MoonTable extends AbstractTable{
             PyzMoonTableMap::COL_ORBIT_TIME => 'Orbit time',
             PyzPlanetTableMap::COL_NAME => 'Orbited Planet',
             //static::COL_MOONS => static::COL_MOONS,
-            //static::COL_ACTIONS => static::COL_ACTIONS,
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 
         $config->setSortable([
@@ -60,7 +60,7 @@ class MoonTable extends AbstractTable{
         ]);
 
         $config->setRawColumns([
-            //static::COL_ACTIONS,
+            static::COL_ACTIONS,
             //static::COL_MOONS,
         ]);
 
@@ -78,8 +78,7 @@ class MoonTable extends AbstractTable{
         //die();
 
         $planetDataItems = $this->runQuery(
-            $this->moonQuery
-                ->innerJoinWithPyzPlanet(),
+            $this->moonQuery->innerJoinWithPyzPlanet(),
             $config
         );
 
@@ -101,13 +100,13 @@ class MoonTable extends AbstractTable{
                 PyzMoonTableMap::COL_ID_PLANET =>
                     $planetDataItem[PyzMoonTableMap::COL_ID_PLANET],
                 PyzPlanetTableMap::COL_NAME =>
-                    $planetDataItem['PyzPlanet'][PyzPlanetTableMap::COL_NAME]
+                    $planetDataItem['PyzPlanet'][PyzPlanetTableMap::COL_NAME],
                 /*static::COL_MOONS => //'',
-                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
+                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),*/
                 static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
-                    '<a href="/planet/edit/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Edit</a>'.
-                    '<a href="/planet/delete/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Delete</a>'
-            */
+                    '<a href="/planet/moon/edit?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Edit</a>'.
+                    '<a href="/planet/moon/delete?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Delete</a>'
+
             ];
         }
 

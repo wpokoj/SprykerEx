@@ -2,6 +2,7 @@
 
 namespace Pyz\Zed\Planet\Persistence;
 
+use Generated\Shared\Transfer\MoonTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
@@ -20,9 +21,6 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
             ->filterByIdPlanet($id)
             ->findOne();
 
-        //q = new PyzPlanetQuery();
-        //$q->upd
-
         if(!$res) {
             return null;
         }
@@ -36,18 +34,34 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
         $data = $this
             ->getFactory()
             ->createPlanetQuery()
-            ->joinWithPyzMoon()
+            ->leftJoinWithPyzMoon()
             ->find();
-
-
-
-        //var_dump($data->getData());
-        //die()
-        //;
 
         return $data;
     }
 
+    public function findMoonById(int $id): ?MoonTransfer {
+        $res = $this
+            ->getFactory()
+            ->createMoonQuery()
+            ->filterByIdMoon($id)
+            ->findOne();
+
+        if(!$res) {
+            return null;
+        }
+
+        return (new MoonTransfer())
+            ->fromArray($res->toArray(),true);
+
+    }
+
+    public function findMoons(): ObjectCollection {
+        // TODO: Implement findMoons() method.
+    }
+
+
+    // TODO: Remove this
     public function moonPlanetGet() : array {
 
         $res = new PyzPlanetQuery();
@@ -66,6 +80,7 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
         die();
     }
 
+    // TODO: Remove this
     public function moonPlanetGetById($planetId) : ObjectCollection {
 
         $res = new PyzPlanetQuery();
@@ -87,4 +102,6 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
 
 
     }
+
+
 }

@@ -2,9 +2,11 @@
 
 namespace Pyz\Zed\Planet\Communication;
 
+use Generated\Shared\Transfer\MoonTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
+use Pyz\Zed\Planet\Communication\Form\MoonForm;
 use Pyz\Zed\Planet\Communication\Form\PlanetForm;
 use Pyz\Zed\Planet\Communication\Table\MoonTable;
 use Pyz\Zed\Planet\PlanetDependencyProvider;
@@ -60,6 +62,21 @@ class PlanetCommunicationFactory extends AbstractCommunicationFactory {
         return $this->getFormFactory()->create(
             PlanetForm::class,
             $planetTransfer,
+            $options
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PlanetTransfer|null $planetTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+
+    public function createMoonForm(?MoonTransfer $moonTransfer = null, array $options = []): FormInterface {
+        return $this->getFormFactory()->create(
+            MoonForm::class,
+            $moonTransfer,
             $options
         );
     }

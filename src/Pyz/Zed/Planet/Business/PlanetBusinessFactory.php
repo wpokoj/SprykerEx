@@ -6,6 +6,8 @@ use Pyz\Zed\Planet\Business\Deleter\PlanetDeleter;
 use Pyz\Zed\Planet\Business\Deleter\PlanetDeleterInterface;
 use Pyz\Zed\Planet\Business\Editor\PlanetEditor;
 use Pyz\Zed\Planet\Business\Editor\PlanetEditorInterface;
+use Pyz\Zed\Planet\Business\Reader\MoonReader;
+use Pyz\Zed\Planet\Business\Reader\MoonReaderInterface;
 use Pyz\Zed\Planet\Business\Reader\PlanetReader;
 use Pyz\Zed\Planet\Business\Reader\PlanetReaderInterface;
 use Pyz\Zed\Planet\Business\Writer\PlanetWriter;
@@ -32,6 +34,11 @@ class PlanetBusinessFactory extends AbstractBusinessFactory {
     public function createPlanetDeleter(): PlanetDeleterInterface {
 
         return new PlanetDeleter($this->getEntityManager());
+    }
+
+    public function createMoonReader() : MoonReaderInterface {
+
+        return new MoonReader($this->getRepository());
     }
 
 }
