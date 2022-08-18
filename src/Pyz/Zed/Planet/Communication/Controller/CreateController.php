@@ -22,7 +22,7 @@ class CreateController extends AbstractController {
 
             $transfer = $this->getFacade()->createPlanetEntity($data);
 
-            $this->addSuccessMessage('Planet was created.');
+            $this->addSuccessMessage('Planet was created successfully');
             return $this->redirectResponse('/planet/list');
         }
 

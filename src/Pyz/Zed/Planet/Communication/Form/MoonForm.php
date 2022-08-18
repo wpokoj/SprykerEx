@@ -73,7 +73,7 @@ class MoonForm extends AbstractType {
     private function addOrbitedPlanetField(FormBuilderInterface $builder): MoonForm
     {
 
-        // TODO: Make this injectable
+        // TODO: Make this comply with layers segregation
         $query = new PyzPlanetQuery();
 
         $planets = $query->find();

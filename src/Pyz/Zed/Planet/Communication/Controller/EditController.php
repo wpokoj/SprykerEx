@@ -40,7 +40,7 @@ class EditController extends AbstractController
 
             //(new PlanetEntityManager())->editEntity($planetForm->getData());
 
-            $this->addSuccessMessage('Planet was updated.');
+            $this->addSuccessMessage('Planet updated successfully');
             return $this->redirectResponse('/planet/list');
         }
 
