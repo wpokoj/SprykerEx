@@ -76,7 +76,7 @@ class PlanetTable extends AbstractTable {
      * @return array
      */
     protected function prepareData(TableConfiguration $config) : array {
-
+        
         $planetDataItems = $this->runQuery(
             $this->planetQuery,//->leftJoinWithPyzMoon(),
             $config

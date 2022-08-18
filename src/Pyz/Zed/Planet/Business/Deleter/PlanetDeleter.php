@@ -18,6 +18,6 @@ class PlanetDeleter implements PlanetDeleterInterface {
 
     public function deletePlanetEntity(PlanetTransfer $planetTransfer): void {
 
-        $this->manager->deleteEntity($planetTransfer);
+        $this->manager->deletePlanetEntity($planetTransfer);
     }
 }

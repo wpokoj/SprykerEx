@@ -18,7 +18,7 @@ class GatewayController extends AbstractGatewayController {
 
         $res = new PlanetCollectionTransfer();
 
-        /*$res->addPlanet((new PlanetTransfer())->fromArray([
+        /*$s->addPlanet((new PlanetTransfer())->fromArray([
             'name' => 'jupiter',
             'idPlanet' => 6,
             'interestingFact' => '',

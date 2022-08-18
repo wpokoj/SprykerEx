@@ -6,6 +6,7 @@ namespace Pyz\Zed\Planet\Communication\Controller;
 use Generated\Shared\Transfer\MoonTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Orm\Zed\Planet\Persistence\PyzMoonQuery;
+use Pyz\Zed\Planet\Persistence\PlanetEntityManager;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 //use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,7 +47,12 @@ class MoonController extends AbstractController {
 
         if($planetForm->isSubmitted() && $planetForm->isValid()) {
 
-            $this->addInfoMessage(json_encode($planetForm->getData()->toArray()));
+            $this->getFacade()
+                ->createMoonEntity($planetForm->getData());
+            //$this->addInfoMessage(json_encode($planetForm->getData()->toArray()));
+            $this->addSuccessMessage('Moon added successfully');
+
+            return $this->redirectResponse('/planet/moon/list');
         }
 
         return $this->viewResponse([
@@ -71,7 +77,23 @@ class MoonController extends AbstractController {
 
         if($planetForm->isSubmitted() && $planetForm->isValid()) {
 
-            $this->addInfoMessage(json_encode($planetForm->getData()->toArray()));
+            //$this->getFacade()
+            //    ->editMoonEntity($planetForm->getData());
+
+            (new PlanetEntityManager())
+                ->editMoonEntity($planetForm->getData());
+
+            $moon = $planetForm->getData();
+            if(! $moon instanceof MoonTransfer) return null;
+
+            $moon->setPyzPlanet(
+                $this->getFacade()->findPlanetEntity(
+                    $moon->getIdPlanet()
+                )
+            );
+
+            $this->addSuccessMessage(json_encode($moon->toArray()));
+            $this->addSuccessMessage('Moon edited successfully');
 
             return $this->redirectResponse('/planet/moon/list');
         }

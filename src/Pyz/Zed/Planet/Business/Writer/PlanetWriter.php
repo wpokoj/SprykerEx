@@ -16,6 +16,6 @@ class PlanetWriter implements PlanetWriterInterface {
 
     public function savePlanetEntity(PlanetTransfer $transfer) : PlanetTransfer {
 
-        return $this->entityManager->saveEntity($transfer);
+        return $this->entityManager->savePlanetEntity($transfer);
     }
 }

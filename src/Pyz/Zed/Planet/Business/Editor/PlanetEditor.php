@@ -16,7 +16,7 @@ class PlanetEditor implements PlanetEditorInterface {
 
     public function editPlanetEntity(PlanetTransfer $transfer): PlanetTransfer {
 
-        return $this->entityManager->editEntity($transfer);
+        return $this->entityManager->editPlanetEntity($transfer);
     }
 
 }

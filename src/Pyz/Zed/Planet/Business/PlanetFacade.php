@@ -54,11 +54,17 @@ class PlanetFacade extends AbstractFacade implements PlanetFacadeInterface {
     }
 
     public function createMoonEntity(MoonTransfer $transfer): MoonTransfer {
-        // TODO: Implement createMoonEntity() method.
+
+        return $this->getFactory()
+            ->createMoonWriter()
+            ->saveMoon($transfer);
     }
 
     public function editMoonEntity(MoonTransfer $transfer): MoonTransfer {
-        // TODO: Implement editMoonEntity() method.
+
+        return $this->getFactory()
+            ->createMoonEditor()
+            ->editMoonEntity($transfer);
     }
 
     public function findMoonEntity(int $id): ?MoonTransfer {
