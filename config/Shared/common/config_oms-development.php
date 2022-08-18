@@ -42,13 +42,14 @@ $config[OmsConstants::ACTIVE_PROCESSES] = array_merge([
     'DummyPayment01',
     'B2CStateMachine01',
     'DFA',
+    'NewPayment01',
 ], $config[OmsConstants::ACTIVE_PROCESSES]);
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = array_replace(
     $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING],
     [
     //DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',
-    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DFA',
+    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'NewPayment01',
     DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',
     NopaymentConfig::PAYMENT_PROVIDER_NAME => 'Nopayment01',
     GiftCardConfig::PROVIDER_NAME => 'DummyPayment01',

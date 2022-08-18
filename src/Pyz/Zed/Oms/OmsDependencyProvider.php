@@ -97,6 +97,7 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new SendEventPaymentRefundPendingPlugin(), 'Payment/SendEventPaymentRefundPending');
             $commandCollection->add(new SendEventPaymentCancelReservationPendingPlugin(), 'Payment/SendEventPaymentCancelReservationPending');
             $commandCollection->add(new PayCommand(), 'DFA/Pay');
+            $commandCollection->add(new \Pyz\Zed\Oms\Communication\Plugin\Command\NewPayment\PayCommand(), 'NewPayment/Pay');
 
             return $commandCollection;
         });
@@ -114,7 +115,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
         $container->extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection
             ->add(new IsGiftCardConditionPlugin(), 'GiftCard/IsGiftCard')
-            ->add(new IsAuthorizedCondition(), 'DFA/IsAuthorized');
+            ->add(new IsAuthorizedCondition(), 'DFA/IsAuthorized')
+            ->add(new \Pyz\Zed\Oms\Communication\Plugin\Condition\NewPayment\IsAuthorizedCondition(), 'NewPayment/IsAuthorized');
 
             return $conditionCollection;
         });

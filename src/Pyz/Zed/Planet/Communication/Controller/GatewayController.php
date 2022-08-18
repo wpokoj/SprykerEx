@@ -27,9 +27,6 @@ class GatewayController extends AbstractGatewayController {
 
         $data = $this->getFacade()->getPlanetEntities();
 
-        if(!$data instanceof ObjectCollection)
-            return new PlanetCollectionTransfer();
-
         foreach ($data->getData() as $planet) {
             /*$res->addPlanet*///var_dump(
             $planetTrans = (new PlanetTransfer())

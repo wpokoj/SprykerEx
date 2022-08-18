@@ -210,9 +210,9 @@
             <event name="pay" onEnter="true" command="DFA/Pay" />
             <event name="ship" manual="true" />
             <event name="return" manual="true" />
-            <event name="eventA" manual="true" timeout="1 minute" />
-            <event name="eventB" manual="true" timeout="1 minute" />
-            <event name="eventC" manual="true" timeout="1 minute" />
+            <event name="eventA" manual="true" timeout="1 day" />
+            <event name="eventB" manual="true" timeout="1 day" />
+            <event name="eventC" manual="true" timeout="1 day" />
             <event name="refund" onEnter="true" />
             <event name="close" timeout="14 days" />
             <event name="close after refund" onEnter="true" />

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class AddController extends AbstractController {
+class ThrowawayDebugController extends AbstractController {
 
     public function indexAction() {
 
