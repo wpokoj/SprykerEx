@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\PyzMoonEntityTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Orm\Zed\Planet\Persistence\Map\PyzMoonTableMap;
 use Orm\Zed\Planet\Persistence\Map\PyzPlanetTableMap;
+use Orm\Zed\Planet\Persistence\PyzMoon;
 use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Pyz\Zed\Planet\Persistence\PlanetRepository;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -26,14 +27,16 @@ class PlanetTable extends AbstractTable {
      */
     private PyzPlanetQuery $planetQuery;
 
+    /** @var PyzMoonQuery
+     */
+    private PyzMoonQuery $moonQuery;
     /**
      * @param PyzPlanetQuery $planetQuery
+     * @param PyzMoonQuery $moonQuery
      */
-    public function __construct(PyzPlanetQuery $planetQuery) {
+    public function __construct(PyzPlanetQuery $planetQuery, PyzMoonQuery $moonQuery) {
         $this->planetQuery = $planetQuery;
-
-        //var_dump($planetQuery);
-        //die();
+        $this->moonQuery = $moonQuery;
     }
 
     /**
@@ -99,8 +102,8 @@ class PlanetTable extends AbstractTable {
                 PyzPlanetTableMap::COL_INTERESTING_FACT =>
                     $planetDataItem[PyzPlanetTableMap:: COL_INTERESTING_FACT],
                 // TODO: Disabled for now, need update
-                //static::COL_MOONS => //'',
-                //   $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
+                static::COL_MOONS => //'',
+                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
                 static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
                     '<a href="/planet/edit/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Edit</a>'.
                     '<a href="/planet/delete/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Delete</a>'
@@ -115,28 +118,16 @@ class PlanetTable extends AbstractTable {
     protected function createMoonDropdown(int $planetId): string {
 
         try {
+            $this->moonQuery->clear();
+            $data = $this->moonQuery->filterByIdPlanet($planetId)->find();
 
-            /*$moons = ($this->planetQuery)
-                ->joinWithPyzMoon()
-                //->filterByIdPlanet($planetId)
-                ->find();*/
-            // TODO: Refactor this
-            $moons = (new PlanetRepository())->moonPlanetGetById($planetId);
-
-            $data = (new PlanetTransfer())->fromArray(($moons->toArray())[0]);
-
-            //var_dump($data);
-            //die();
-
-            if(count($data->getPyzMoons()) === 0) {
+            if(count($data->getData()) === 0) {
                 return '';
             }
 
             $list = '<select>';
 
-            //var_dump($data); die();
-
-            foreach ($data->getPyzMoons() as $moon) {
+            foreach ($data->getData() as $moon) {
                 $list = $list.'<option>'.($moon)->getName().'</option>';
             }
 

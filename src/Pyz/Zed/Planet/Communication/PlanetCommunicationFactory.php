@@ -25,7 +25,10 @@ class PlanetCommunicationFactory extends AbstractCommunicationFactory {
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createPlanetTable(): PlanetTable {
-        return new PlanetTable($this->getPlanetPropelQuery());
+        return new PlanetTable(
+            $this->getPlanetPropelQuery(),
+            $this->getMoonPropelQuery(),
+        );
     }
     /**
      * @return \Pyz\Zed\Planet\Communication\Table\MoonTable
