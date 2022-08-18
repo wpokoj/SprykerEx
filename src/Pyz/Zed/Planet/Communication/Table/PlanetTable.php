@@ -81,13 +81,9 @@ class PlanetTable extends AbstractTable {
     protected function prepareData(TableConfiguration $config) : array {
 
         $planetDataItems = $this->runQuery(
-            $this->planetQuery,//->leftJoinWithPyzMoon(),
+            $this->planetQuery,
             $config
         );
-
-        //$planetDataItems;
-
-        //var_dump($planetDataItems); die();
 
         $planetTableRows = [];
 
@@ -101,12 +97,10 @@ class PlanetTable extends AbstractTable {
                     $planetDataItem[PyzPlanetTableMap::COL_ORBIT_TIME],
                 PyzPlanetTableMap::COL_INTERESTING_FACT =>
                     $planetDataItem[PyzPlanetTableMap:: COL_INTERESTING_FACT],
-                // TODO: Disabled for now, need update
                 static::COL_MOONS => //'',
                     $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
-                static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
-                    '<a href="/planet/edit/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Edit</a>'.
-                    '<a href="/planet/delete/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Delete</a>'
+                static::COL_ACTIONS =>
+                    $this->generateActions($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
             ];
         }
 
@@ -118,6 +112,8 @@ class PlanetTable extends AbstractTable {
     protected function createMoonDropdown(int $planetId): string {
 
         try {
+            // Since tables are allowed to interact with Persistence layer
+            // this should be legal
             $this->moonQuery->clear();
             $data = $this->moonQuery->filterByIdPlanet($planetId)->find();
 
@@ -132,7 +128,7 @@ class PlanetTable extends AbstractTable {
             }
 
             return $list.'</select>';
-        }
+        } // just in case
         catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -143,7 +139,7 @@ class PlanetTable extends AbstractTable {
 
         return implode(' ', [
             $this->createEditButton($id),
-            //$this->createDeleteButton($id),
+            $this->createDeleteButton($id),
         ]);
     }
 
@@ -153,7 +149,7 @@ class PlanetTable extends AbstractTable {
      * @return string
      */
     protected function createEditButton(int $id): string {
-        return $this->generateViewButton(
+        return $this->generateEditButton(
             Url::generate(
                 '/planet/edit/index', [
                     'id-planet' => $id,
@@ -163,12 +159,12 @@ class PlanetTable extends AbstractTable {
     }
 
     /**
-     * @param int $idProductRelation
+     * @param int $id
      *
      * @return string
      */
     protected function createDeleteButton(int $id): string {
-        return $this->generateEditButton(
+        return $this->generateRemoveButton(
             Url::generate(
                 '/planet/delete/index', [
                 'id-planet' => $id,

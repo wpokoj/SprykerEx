@@ -12,6 +12,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
+/**
+ * @method PlanetPersistenceFactory getFactory()
+ */
 class PlanetEntityManager extends AbstractEntityManager implements PlanetEntityManagerInterface {
 
     public function savePlanetEntity(PlanetTransfer $transfer) : PlanetTransfer {
@@ -71,18 +74,34 @@ class PlanetEntityManager extends AbstractEntityManager implements PlanetEntityM
 
     public function editMoonEntity(MoonTransfer $transfer): MoonTransfer {
 
+        // TODO: Figure out why this works and other methods don't
         $moonEntity =
             $this
                 ->getFactory()
                 ->createMoonQuery()
                 ->filterByIdMoon($transfer->getIdMoon())
-                ->findOneOrCreate();
-
-
-        $moonEntity->fromArray($transfer->toArray());
-        $moonEntity->save();
+                ->update([
+                    'IdPlanet'  => $transfer->getIdPlanet(),
+                    'Name'      => $transfer->getName(),
+                    'OrbitTime' => $transfer->getOrbitTime(),
+                ]);
 
         return $transfer;
+        /*
+        $moonEntity->setIdPlanet($transfer->getIdPlanet());
+        $moonEntity->save();
+
+        var_dump($moonEntity); die();
+
+        $moonEntity->fromArray($transfer->toArray());
+
+        $moonEntity->setPyzPlanet(
+            $this->getFactory()->createPlanetQuery()
+                ->findOneByIdPlanet($transfer->getIdPlanet())
+        );
+
+        return $transfer;
+        */
     }
 
     public function deleteMoonEntity(MoonTransfer $transfer): void {
