@@ -7,51 +7,16 @@ use Generated\Shared\Transfer\PlanetCollectionTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\RestPlanetsResponseAttributesTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Pyz\Zed\Planet\Business\PlanetFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Pyz\Zed\Planet\Business\PlanetFacade getPlanetEntities
+ * @method PlanetFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController {
 
     public function getPlanetCollectionAction(PlanetCollectionTransfer $transfer) : PlanetCollectionTransfer{
 
-        $res = new PlanetCollectionTransfer();
-
-        /*$s->addPlanet((new PlanetTransfer())->fromArray([
-            'name' => 'jupiter',
-            'idPlanet' => 6,
-            'interestingFact' => '',
-            'orbitTime' => ''
-        ],true));*/
-
-        $data = $this->getFacade()->getPlanetEntities();
-
-        foreach ($data->getData() as $planet) {
-            /*$res->addPlanet*///var_dump(
-            $planetTrans = (new PlanetTransfer())
-                ->fromArray(
-                    $planet->toArray(),
-
-                );
-
-            $moons = $planet->getPyzMoons();
-
-            foreach ($moons->getData() as $moon) {
-                $planetTrans->addPyzMoons((new MoonTransfer())->fromArray($moon->toArray()));
-            }
-
-            //echo '<br><br>';
-
-            $res->addPlanet($planetTrans);
-
-
-            //);
-        }
-
-        //var_dump($res); die();
-        return $res;
-
-        //return new PlanetCollectionTransfer();
+        return $this->getFacade()->getPlanetCollection($transfer);
     }
 }

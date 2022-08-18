@@ -3,17 +3,19 @@
 namespace Pyz\Zed\Planet\Business;
 
 use Generated\Shared\Transfer\MoonTransfer;
+use Generated\Shared\Transfer\PlanetCollectionTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Pyz\Zed\Planet\Persistence\PlanetEntityManager;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method PlanetBusinessFactory getFactory()
+ */
 class PlanetFacade extends AbstractFacade implements PlanetFacadeInterface {
 
     public function createPlanetEntity(PlanetTransfer $transfer): PlanetTransfer {
-
-        //$transfer->setInterestingFact(strrev($transfer->getInterestingFact()));
 
         return $this
             ->getFactory()
@@ -52,6 +54,16 @@ class PlanetFacade extends AbstractFacade implements PlanetFacadeInterface {
             ->createPlanetDeleter()
             ->deletePlanetEntity($transfer);
     }
+
+    public function getPlanetCollection(PlanetCollectionTransfer $transfer): PlanetCollectionTransfer {
+
+        return $this->getFactory()
+            ->createPlanetReader()
+            ->getPlanetCollection($transfer);
+    }
+
+
+
 
     public function createMoonEntity(MoonTransfer $transfer): MoonTransfer {
 

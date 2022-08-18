@@ -76,7 +76,7 @@ class PlanetTable extends AbstractTable {
      * @return array
      */
     protected function prepareData(TableConfiguration $config) : array {
-        
+
         $planetDataItems = $this->runQuery(
             $this->planetQuery,//->leftJoinWithPyzMoon(),
             $config
@@ -98,8 +98,9 @@ class PlanetTable extends AbstractTable {
                     $planetDataItem[PyzPlanetTableMap::COL_ORBIT_TIME],
                 PyzPlanetTableMap::COL_INTERESTING_FACT =>
                     $planetDataItem[PyzPlanetTableMap:: COL_INTERESTING_FACT],
-                static::COL_MOONS => //'',
-                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
+                // TODO: Disabled for now, need update
+                //static::COL_MOONS => //'',
+                //   $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
                 static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
                     '<a href="/planet/edit/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Edit</a>'.
                     '<a href="/planet/delete/index?id-planet='.$planetDataItem[PyzPlanetTableMap::COL_ID_PLANET].'">Delete</a>'
@@ -119,7 +120,7 @@ class PlanetTable extends AbstractTable {
                 ->joinWithPyzMoon()
                 //->filterByIdPlanet($planetId)
                 ->find();*/
-
+            // TODO: Refactor this
             $moons = (new PlanetRepository())->moonPlanetGetById($planetId);
 
             $data = (new PlanetTransfer())->fromArray(($moons->toArray())[0]);

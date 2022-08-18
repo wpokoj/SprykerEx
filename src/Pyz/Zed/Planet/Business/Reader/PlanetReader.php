@@ -2,6 +2,7 @@
 
 namespace Pyz\Zed\Planet\Business\Reader;
 
+use Generated\Shared\Transfer\PlanetCollectionTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Pyz\Zed\Planet\Persistence\PlanetRepositoryInterface;
@@ -23,5 +24,10 @@ class PlanetReader implements PlanetReaderInterface {
     public function getPlanets() : ObjectCollection {
 
         return $this->repo->findPlanets();
+    }
+
+    public function getPlanetCollection(PlanetCollectionTransfer $transfer) : PlanetCollectionTransfer {
+
+        return $this->repo->getPlanetCollection($transfer);
     }
 }

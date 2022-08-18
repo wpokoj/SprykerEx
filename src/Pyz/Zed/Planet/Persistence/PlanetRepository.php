@@ -3,6 +3,7 @@
 namespace Pyz\Zed\Planet\Persistence;
 
 use Generated\Shared\Transfer\MoonTransfer;
+use Generated\Shared\Transfer\PlanetCollectionTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Generated\Shared\Transfer\PyzPlanetEntityTransfer;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
@@ -55,6 +56,38 @@ class PlanetRepository extends AbstractRepository implements PlanetRepositoryInt
             ->fromArray($res->toArray(),true);
 
     }
+
+    public function getPlanetCollection(
+        PlanetCollectionTransfer $transfer,
+        ?int $planetId = null
+    ): PlanetCollectionTransfer
+    {
+        $query = $this->getFactory()->createPlanetQuery();
+
+        if($planetId !== null) {
+            $query = $query->filterByIdPlanet($planetId);
+        }
+
+        $res = $query->leftJoinWithPyzMoon()->find();
+
+        foreach ($res->getData() as $planet) {
+            $planetTrans = (new PlanetTransfer())->fromArray(
+                    $planet->toArray(),
+                );
+
+            $moons = $planet->getPyzMoons();
+
+            foreach ($moons->getData() as $moon) {
+                $planetTrans->addPyzMoons((new MoonTransfer())
+                    ->fromArray($moon->toArray()));
+            }
+
+            $transfer->addPlanet($planetTrans);
+        }
+
+        return $transfer;
+    }
+
 
     public function findMoons(): ObjectCollection {
         // TODO: Implement findMoons() method.
