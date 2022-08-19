@@ -62,9 +62,6 @@ class PlanetFacade extends AbstractFacade implements PlanetFacadeInterface {
             ->getPlanetCollection($transfer);
     }
 
-
-
-
     public function createMoonEntity(MoonTransfer $transfer): MoonTransfer {
 
         return $this->getFactory()
@@ -93,6 +90,8 @@ class PlanetFacade extends AbstractFacade implements PlanetFacadeInterface {
     }
 
     public function deleteMoonEntity(MoonTransfer $transfer): void {
-        // TODO: Implement deleteMoonEntity() method.
+        $this->getFactory()
+            ->createMoonDeleter()
+            ->deleteMoonEntity($transfer);
     }
 }

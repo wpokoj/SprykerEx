@@ -151,7 +151,7 @@ class PlanetTable extends AbstractTable {
     protected function createEditButton(int $id): string {
         return $this->generateEditButton(
             Url::generate(
-                '/planet/edit/index', [
+                '/planet/planet-edit', [
                     'id-planet' => $id,
                 ]),
             'Edit'
@@ -166,7 +166,7 @@ class PlanetTable extends AbstractTable {
     protected function createDeleteButton(int $id): string {
         return $this->generateRemoveButton(
             Url::generate(
-                '/planet/delete/index', [
+                '/planet/planet-delete', [
                 'id-planet' => $id,
             ]),
             'Delete'

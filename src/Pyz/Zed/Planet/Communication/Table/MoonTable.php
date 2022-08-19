@@ -17,7 +17,6 @@ use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
 
 class MoonTable extends AbstractTable{
     const COL_ACTIONS = 'Actions';
-    const COL_MOONS = 'Moons';
 
     /** @var PyzMoonQuery
      */
@@ -42,7 +41,7 @@ class MoonTable extends AbstractTable{
 
         $config->setHeader([
             PyzMoonTableMap::COL_ID_MOON => 'Moon ID',
-            PyzMoonTableMap::COL_NAME => 'Planet name',
+            PyzMoonTableMap::COL_NAME => 'Moon name',
             PyzMoonTableMap::COL_ORBIT_TIME => 'Orbit time',
             PyzPlanetTableMap::COL_NAME => 'Orbited Planet',
             //static::COL_MOONS => static::COL_MOONS,
@@ -50,18 +49,16 @@ class MoonTable extends AbstractTable{
         ]);
 
         $config->setSortable([
-            PyzPlanetTableMap::COL_ID_PLANET,
-            PyzPlanetTableMap::COL_NAME,
-            PyzPlanetTableMap::COL_INTERESTING_FACT,
+            PyzMoonTableMap::COL_ID_MOON,
+            PyzMoonTableMap::COL_NAME,
         ]);
 
         $config->setSearchable([
-            PyzPlanetTableMap::COL_NAME,
+            PyzMoonTableMap::COL_NAME,
         ]);
 
         $config->setRawColumns([
             static::COL_ACTIONS,
-            //static::COL_MOONS,
         ]);
 
         return $config;
@@ -74,18 +71,10 @@ class MoonTable extends AbstractTable{
      */
     protected function prepareData(TableConfiguration $config) : array {
 
-        //var_dump($config);
-        //die();
-
         $planetDataItems = $this->runQuery(
             $this->moonQuery->innerJoinWithPyzPlanet(),
             $config
         );
-
-        //var_dump($planetDataItems);
-        //die();
-
-        //return $planetDataItems;
 
         $planetTableRows = [];
 
@@ -104,15 +93,13 @@ class MoonTable extends AbstractTable{
                 /*static::COL_MOONS => //'',
                     $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),*/
                 static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
-                    '<a href="/planet/moon/edit?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Edit</a>'.
-                    '<a href="/planet/moon/delete?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Delete</a>'
+                    '<a href="/planet/moon-edit?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Edit</a>'.
+                    '<a href="/planet/moon-delete?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Delete</a>'
 
             ];
         }
 
         return $planetTableRows;
-
-        //return $this->runQuery($this->planetQuery, $config);
     }
 
 }

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Pyz\Zed\Planet\Communication\PlanetCommunicationFactory getFactory()
  */
-class CreateController extends AbstractController {
+class PlanetCreateController extends AbstractController {
     public function indexAction(Request $request) {
         $planetForm = $this->getFactory()
             ->createPlanetForm()
@@ -23,7 +23,7 @@ class CreateController extends AbstractController {
             $transfer = $this->getFacade()->createPlanetEntity($data);
 
             $this->addSuccessMessage('Planet was created successfully');
-            return $this->redirectResponse('/planet/list');
+            return $this->redirectResponse('/planet/planet-list');
         }
 
         return $this->viewResponse([

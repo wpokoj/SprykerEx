@@ -94,8 +94,7 @@ class MoonController extends AbstractController {
             //$planet->addPyzMoons($moon);
             //$moon->setPyzPlanet($planet);
 
-            // TODO: Temporary
-            (new PlanetEntityManager())
+            $this->getFacade()
                 ->editMoonEntity($moon);
 
             $this->addSuccessMessage(json_encode($moon->toArray()));

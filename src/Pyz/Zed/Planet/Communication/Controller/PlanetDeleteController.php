@@ -6,7 +6,7 @@ use Pyz\Zed\Planet\Persistence\PlanetEntityManager;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class DeleteController extends AbstractController {
+class PlanetDeleteController extends AbstractController {
 
     public function indexAction(Request $request) {
 
@@ -15,7 +15,7 @@ class DeleteController extends AbstractController {
         }
         catch(\Exception $e) {
             $this->addErrorMessage('No planet id given');
-            return $this->redirectResponse('/planet/list');
+            return $this->redirectResponse('/planet/planet-list');
         }
 
 
@@ -23,7 +23,7 @@ class DeleteController extends AbstractController {
 
         if($planetTransfer === null) {
             $this->addErrorMessage('Planet with id = '.$idPlanet.' not found!');
-            return $this->redirectResponse('/planet/list');
+            return $this->redirectResponse('/planet/planet-list');
         }
 
         //(new PlanetEntityManager())->deleteEntity($planetTransfer);
@@ -32,6 +32,6 @@ class DeleteController extends AbstractController {
             ->deletePlanetEntity($planetTransfer);
 
         $this->addInfoMessage('Planet deleted successfully');
-        return $this->redirectResponse('/planet/list');
+        return $this->redirectResponse('/planet/planet-list');
     }
 }

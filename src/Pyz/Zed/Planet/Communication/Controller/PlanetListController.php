@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method \Pyz\Zed\Planet\Communication\PlanetCommunicationFactory getFactory()
  */
-class ListController extends AbstractController {
+class PlanetListController extends AbstractController {
 
     /**
      * @return array
