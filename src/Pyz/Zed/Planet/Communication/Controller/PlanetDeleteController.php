@@ -27,9 +27,14 @@ class PlanetDeleteController extends AbstractController {
         }
 
         //(new PlanetEntityManager())->deleteEntity($planetTransfer);
-
-        $this->getFacade()
-            ->deletePlanetEntity($planetTransfer);
+        try {
+            $this->getFacade()
+                ->deletePlanetEntity($planetTransfer);
+        }
+        catch(\Exception $e) {
+            $this->addErrorMessage('An error occurred while deleting planet');
+            return $this->redirectResponse('/planet/planet-list');
+        }
 
         $this->addInfoMessage('Planet deleted successfully');
         return $this->redirectResponse('/planet/planet-list');

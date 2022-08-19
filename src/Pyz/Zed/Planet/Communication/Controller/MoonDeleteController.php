@@ -26,8 +26,8 @@ class MoonDeleteController extends AbstractController  {
         $moonTrans = $this->getFacade()->findMoonEntity($idMoon);
 
         if($moonTrans === null) {
-            $this->addErrorMessage('Planet with id = '.$idMoon.' not found!');
-            return $this->redirectResponse('/planet/planet-list');
+            $this->addErrorMessage('Moon with id = '.$idMoon.' not found!');
+            return $this->redirectResponse('/planet/moon-list');
         }
 
         try {
@@ -39,7 +39,7 @@ class MoonDeleteController extends AbstractController  {
             return $this->redirectResponse('/planet/moon-list');
         }
 
-        $this->addInfoMessage('Planet deleted successfully');
-        return $this->redirectResponse('/planet/planet-list');
+        $this->addSuccessMessage('Moon deleted successfully');
+        return $this->redirectResponse('/planet/moon-list');
     }
 }

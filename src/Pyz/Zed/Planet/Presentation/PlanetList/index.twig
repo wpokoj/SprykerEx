@@ -3,6 +3,14 @@
 {% set widget_title = 'Overview of Planets' | trans %}
 
 {% block head_title widget_title %}
+
+
+{% block action %}
+    {{ viewActionButton('/planet/moon-list', 'View Moons', []) }}
+    {{ createActionButton('/planet/planet-create', 'Create new planet', []) }}
+{% endblock %}
+
+
 {% block section_title widget_title %}
 
 {% block content %}

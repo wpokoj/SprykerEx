@@ -1,8 +1,14 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Overview of Planets' | trans %}
+{% set widget_title = 'Overview of Moons' | trans %}
 
 {% block head_title widget_title %}
+
+{% block action %}
+    {{ viewActionButton('/planet/planet-list', 'View Planets', []) }}
+    {{ createActionButton('/planet/moon-create', 'Create new moon', []) }}
+{% endblock %}
+
 {% block section_title widget_title %}
 
 {% block content %}
@@ -11,7 +17,6 @@
     } %}
         {% block widget_content %}
             {{ planetTable | raw }}
-            <a href="/planet/moon-create"> Add new moon</a>
         {% endblock %}
     {% endembed %}
 {% endblock %}

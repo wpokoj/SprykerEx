@@ -71,35 +71,70 @@ class MoonTable extends AbstractTable{
      */
     protected function prepareData(TableConfiguration $config) : array {
 
-        $planetDataItems = $this->runQuery(
+        $moonDataItems = $this->runQuery(
             $this->moonQuery->innerJoinWithPyzPlanet(),
             $config
         );
 
-        $planetTableRows = [];
+        $moonTableRows = [];
 
-        foreach ($planetDataItems as $planetDataItem) {
-            $planetTableRows[] = [
+        foreach ($moonDataItems as $moonDataItem) {
+            $moonTableRows[] = [
                 PyzMoonTableMap::COL_ID_MOON =>
-                    $planetDataItem[PyzMoonTableMap::COL_ID_MOON],
+                    $moonDataItem[PyzMoonTableMap::COL_ID_MOON],
                 PyzMoonTableMap::COL_NAME =>
-                    $planetDataItem[PyzMoonTableMap::COL_NAME],
+                    $moonDataItem[PyzMoonTableMap::COL_NAME],
                 PyzMoonTableMap::COL_ORBIT_TIME =>
-                    $planetDataItem[PyzMoonTableMap::COL_ORBIT_TIME],
+                    $moonDataItem[PyzMoonTableMap::COL_ORBIT_TIME],
                 PyzMoonTableMap::COL_ID_PLANET =>
-                    $planetDataItem[PyzMoonTableMap::COL_ID_PLANET],
+                    $moonDataItem[PyzMoonTableMap::COL_ID_PLANET],
                 PyzPlanetTableMap::COL_NAME =>
-                    $planetDataItem['PyzPlanet'][PyzPlanetTableMap::COL_NAME],
-                /*static::COL_MOONS => //'',
-                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),*/
-                static::COL_ACTIONS => //$this->generateActions(PyzPlanetTableMap::COL_ID_PLANET),
-                    '<a href="/planet/moon-edit?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Edit</a>'.
-                    '<a href="/planet/moon-delete?id-moon='.$planetDataItem[PyzMoonTableMap::COL_ID_MOON].'">Delete</a>'
+                    $moonDataItem['PyzPlanet'][PyzPlanetTableMap::COL_NAME],
+                static::COL_ACTIONS =>
+                    $this->generateActions($moonDataItem[PyzMoonTableMap::COL_ID_MOON])
 
             ];
         }
 
-        return $planetTableRows;
+        return $moonTableRows;
+    }
+
+    protected function generateActions(int $id): string {
+
+        return implode(' ', [
+            $this->createEditButton($id),
+            $this->createDeleteButton($id),
+        ]);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    protected function createEditButton(int $id): string {
+        return $this->generateEditButton(
+            Url::generate(
+                '/planet/moon-edit', [
+                'id-moon' => $id,
+            ]),
+            'Edit'
+        );
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    protected function createDeleteButton(int $id): string {
+        return $this->generateRemoveButton(
+            Url::generate(
+                '/planet/moon-delete', [
+                'id-moon' => $id,
+            ]),
+            'Delete'
+        );
     }
 
 }
