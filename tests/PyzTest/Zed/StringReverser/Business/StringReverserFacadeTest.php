@@ -32,8 +32,6 @@ class StringReverserFacadeTest extends Unit {
     +     */
     public function testStringIsReversedCorrectly(): void
     {
-        $this->assertTrue(false, 'chcę oblać ten test');
-        return;
 
         // Arrange
         $stringReverserTransfer = (new StringReverserBuilder([

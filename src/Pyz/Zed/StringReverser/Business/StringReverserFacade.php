@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\StringReverserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method StringReverserFactory getFactory()
+ * @method StringReverserBusinessFactory getFactory()
  */
 class StringReverserFacade extends AbstractFacade implements StringReverserFacadeInterface {
 
