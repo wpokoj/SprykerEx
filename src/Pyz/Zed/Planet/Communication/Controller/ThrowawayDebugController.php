@@ -19,6 +19,9 @@ class ThrowawayDebugController extends AbstractController {
 
     public function indexAction() {
 
+        xdebug_info();
+        die();
+
         (new GatewayController())->getPlanetCollectionAction(new PlanetCollectionTransfer());
 
         //var_dump((new PlanetRepository())->findPlanets());
