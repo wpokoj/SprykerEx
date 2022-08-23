@@ -87,7 +87,7 @@ class PlanetForm extends AbstractType {
      */
     private function addOrbitTimeField(FormBuilderInterface $builder): PlanetForm
     {
-        $builder->add(static::FIELD_ORBIT_TIME, TextType::class, [
+        $builder->add(static::FIELD_ORBIT_TIME, IntegerType::class, [
             'constraints' => [
                 new NotBlank()
             ]
