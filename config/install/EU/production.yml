@@ -6,7 +6,6 @@ command-timeout: 1200
 stores:
     - DE
     - AT
-    - PL
 
 sections:
     clean-oms:

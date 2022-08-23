@@ -57,14 +57,6 @@ regions:
                         namespace: 2
                     search:
                         namespace: at_search
-            PL:
-                services:
-                    broker:
-                        namespace: pl-docker
-                    key_value_store:
-                        namespace: 3
-                    search:
-                        namespace: pl_search
     US:
         services:
             database:
@@ -77,7 +69,7 @@ regions:
                     broker:
                         namespace: us-docker
                     key_value_store:
-                        namespace: 4
+                        namespace: 3
                     search:
                         namespace: us_search
 groups:
@@ -97,11 +89,6 @@ groups:
                         services:
                             session:
                                 namespace: 2
-                    yves.pl.spryker.local:
-                        store: PL
-                        services:
-                            session:
-                                namespace: 3
             glue_eu:
                 application: glue
                 endpoints:
@@ -109,8 +96,6 @@ groups:
                         store: DE
                     glue.at.spryker.local:
                         store: AT
-                    glue.pl.spryker.local:
-                        store: PL
             backoffice_eu:
                 application: backoffice
                 endpoints:
@@ -118,17 +103,12 @@ groups:
                         store: DE
                         services:
                             session:
-                                namespace: 4
+                                namespace: 3
                     backoffice.at.spryker.local:
                         store: AT
                         services:
                             session:
-                                namespace: 5
-                    backoffice.pl.spryker.local:
-                        store: PL
-                        services:
-                            session:
-                                namespace: 6
+                                namespace: 4
             backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
@@ -138,9 +118,6 @@ groups:
                     backend-gateway.at.spryker.local:
                         store: AT
                         primal: true
-                    backend-gateway.pl.spryker.local:
-                        store: PL
-                        primal: true
             backend_api_eu:
                 application: zed
                 endpoints:
@@ -149,9 +126,6 @@ groups:
                         entry-point: BackendApi
                     backend-api.at.spryker.local:
                         store: AT
-                        entry-point: BackendApi
-                    backend-api.pl.spryker.local:
-                        store: PL
                         entry-point: BackendApi
     US:
         region: US
@@ -163,7 +137,7 @@ groups:
                         store: US
                         services:
                             session:
-                                namespace: 7
+                                namespace: 5
             glue_us:
                 application: glue
                 endpoints:
@@ -176,7 +150,7 @@ groups:
                         store: US
                         services:
                             session:
-                                namespace: 8
+                                namespace: 6
             backend_gateway_us:
                 application: backend-gateway
                 endpoints:
