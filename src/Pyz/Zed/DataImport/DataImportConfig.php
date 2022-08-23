@@ -53,7 +53,7 @@ class DataImportConfig extends SprykerDataImportConfig
     public const IMPORT_TYPE_COMBINED_PRODUCT_PRICE = 'combined-product-price';
     public const IMPORT_TYPE_COMBINED_PRODUCT_STOCK = 'combined-product-stock';
     public const IMPORT_TYPE_COMBINED_PRODUCT_GROUP = 'combined-product-group';
-
+    public const IMPORT_TYPE_PLANET = 'planet';
     /**
      * @return string|null
      */

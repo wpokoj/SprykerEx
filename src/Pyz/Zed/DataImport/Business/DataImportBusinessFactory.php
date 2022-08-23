@@ -55,6 +55,7 @@ use Pyz\Zed\DataImport\Business\Model\Navigation\NavigationKeyToIdNavigationStep
 use Pyz\Zed\DataImport\Business\Model\Navigation\NavigationWriterStep;
 use Pyz\Zed\DataImport\Business\Model\NavigationNode\NavigationNodeValidityDatesStep;
 use Pyz\Zed\DataImport\Business\Model\NavigationNode\NavigationNodeWriterStep;
+use Pyz\Zed\DataImport\Business\Model\Planet\PlanetWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Product\AttributesExtractorStep;
 use Pyz\Zed\DataImport\Business\Model\Product\ProductLocalizedAttributesExtractorStep;
 use Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository;
@@ -214,10 +215,34 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
                 return $this->createNavigationImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_NAVIGATION_NODE:
                 return $this->createNavigationNodeImporter($dataImportConfigurationActionTransfer);
+            case DataImportConfig::IMPORT_TYPE_PLANET:
+                return $this->createPlanetImporter($dataImportConfigurationActionTransfer);
             default:
                 return null;
         }
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     */
+    protected function createPlanetImporter(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer)
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer)
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker
+            ->addStep(new PlanetWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+
 
     /**
      * @param string $importType
