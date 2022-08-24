@@ -2,6 +2,11 @@
 
 namespace Pyz\Zed\Faq\Communication\Controller;
 
-class CreateController {
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+class CreateController extends AbstractController {
+
+    public function indexAction() {
+
+    }
 }
