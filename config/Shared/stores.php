@@ -122,9 +122,10 @@ $stores['DE'] = [
         // first entry is default
         'en' => 'en_US',
         'de' => 'de_DE',
+        'pl' => 'pl_PL',
     ],
     // first entry is default
-    'countries' => ['DE', 'AT', 'NO', 'CH', 'ES', 'GB'],
+    'countries' => ['DE', 'AT', 'NO', 'CH', 'ES', 'GB', 'PL'],
     // internal and shop
     'currencyIsoCode' => 'EUR',
     'currencyIsoCodes' => ['EUR', 'CHF'],
@@ -134,11 +135,15 @@ $stores['DE'] = [
             'DE-connection',
         ],
     ],
-    'storesWithSharedPersistence' => ['AT'],
+    'storesWithSharedPersistence' => ['AT', 'PL'],
 ];
 
 $stores['AT'] = [
-        'storesWithSharedPersistence' => ['DE'],
+        'storesWithSharedPersistence' => ['DE', 'PL'],
+    ] + $stores['DE'];
+
+$stores['PL'] = [
+        'storesWithSharedPersistence' => ['DE', 'AT'],
     ] + $stores['DE'];
 
 $stores['US'] = [
