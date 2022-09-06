@@ -98,7 +98,7 @@ class PlanetTable extends AbstractTable {
                 PyzPlanetTableMap::COL_INTERESTING_FACT =>
                     $planetDataItem[PyzPlanetTableMap:: COL_INTERESTING_FACT],
                 static::COL_MOONS => //'',
-                    $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
+                   $this->createMoonDropdown($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
                 static::COL_ACTIONS =>
                     $this->generateActions($planetDataItem[PyzPlanetTableMap::COL_ID_PLANET]),
             ];

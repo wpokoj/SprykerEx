@@ -2,11 +2,13 @@
 
 namespace Pyz\Zed\Faq\Communication;
 
+use Generated\Shared\Transfer\FaqTransfer;
 use Generated\Shared\Transfer\MoonTransfer;
 use Generated\Shared\Transfer\PlanetTransfer;
 use Orm\Zed\Planet\Persistence\PyzFaqQuery;
 use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
+use Pyz\Zed\Faq\Communication\Form\FaqForm;
 use Pyz\Zed\Faq\Communication\Table\FaqTable;
 use Pyz\Zed\Faq\FaqDependencyProvider;
 use Pyz\Zed\Planet\Communication\Form\MoonForm;
@@ -46,10 +48,10 @@ class FaqCommunicationFactory extends AbstractCommunicationFactory {
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createPlanetForm(?PlanetTransfer $planetTransfer = null, array $options = []): FormInterface {
+    public function createFaqForm(?FaqTransfer $trans = null, array $options = []): FormInterface {
         return $this->getFormFactory()->create(
-            PlanetForm::class,
-            $planetTransfer,
+            FaqForm::class,
+            $trans,
             $options
         );
     }

@@ -2,6 +2,6 @@
 
 namespace Pyz\Zed\Faq\Persistence;
 
-class FaqEntityManager {
+class FaqEntityManager implements FaqEntityManagerInterface {
 
 }

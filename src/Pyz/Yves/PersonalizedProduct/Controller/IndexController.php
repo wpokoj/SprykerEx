@@ -15,6 +15,8 @@ class IndexController extends AbstractController
     public function indexAction($limit) {
         $searchResults = $this->getClient()->getPersonalizedProducts($limit);
 
+
+
         return $this->view(
             $searchResults,
             [],

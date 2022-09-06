@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyz\Zed\Planet\Persistence\Dependency;
+namespace Pyz\Zed\Planet\Dependency;
 
 class PlanetEvents {
     public const ENTITY_PYZ_PLANET_CREATE = 'Entity.pyz_planet.create';

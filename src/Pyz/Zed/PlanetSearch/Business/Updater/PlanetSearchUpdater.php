@@ -1,20 +1,15 @@
 <?php
 
-namespace Pyz\Zed\PlanetSearch\Business\Writer;
+namespace Pyz\Zed\PlanetSearch\Business\Updater;
 
 use Generated\Shared\Transfer\PlanetTransfer;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
 use Orm\Zed\PlanetSearch\Persistence\PyzPlanetSearchQuery;
 
-class PlanetSearchWriter {
+class PlanetSearchUpdater {
 
-    /**
-     * @param int $idPlanet
-     *
-     * @return void
-     */
-    public function publish(int $idPlanet): void
-    {
+    public function update(int $idPlanet): void {
+
         $planetEntity = PyzPlanetQuery::create()
             ->filterByIdPlanet($idPlanet)
             ->findOne();

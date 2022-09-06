@@ -2,6 +2,6 @@
 
 namespace Pyz\Zed\Faq\Business;
 
-class FaqFacade {
+class FaqFacade implements FaqFacadeInterface {
 
 }

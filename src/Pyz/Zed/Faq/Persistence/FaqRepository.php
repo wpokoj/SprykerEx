@@ -2,6 +2,6 @@
 
 namespace Pyz\Zed\Faq\Persistence;
 
-class FaqRepository {
+class FaqRepository implements FaqRepositoryInterface {
 
 }
