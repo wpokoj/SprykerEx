@@ -8,5 +8,9 @@
         <property name="interestingFact" type="string"/>
         <property name="orbitTime" type="string"/>
         <property name="pyzMoons" type="Moon[]"/>
+
+        <property name="averageTemperature" type="float" />
+        <property name="type" type="string" />
+        <property name="averageDistance" type="int" />
     </transfer>
 </transfers>

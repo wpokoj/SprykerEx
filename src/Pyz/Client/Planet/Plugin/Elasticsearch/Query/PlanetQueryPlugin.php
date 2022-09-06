@@ -10,8 +10,10 @@ use Elastica\Query\BoolQuery;
 
 use Elastica\Query\Exists;
 
+use Elastica\Query\FunctionScore;
 use Elastica\Query\Match;
 
+use Elastica\Query\MatchAll;
 use Generated\Shared\Transfer\SearchContextTransfer;
 
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -54,7 +56,11 @@ class PlanetQueryPlugin implements QueryInterface, SearchContextAwareQueryInterf
             )
             ->addMust(
                 new Match('name', $this->name)
-            );
+            )
+            ->addMust((new FunctionScore())
+                ->setQuery(new MatchAll())
+                ->addFunction('random_score', ['seed' => rand(0,100)])
+                ->setScoreMode('sum'));
 
         $query = (new Query())
             ->setQuery($boolQuery);

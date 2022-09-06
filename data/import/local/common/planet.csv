@@ -1,5 +1,9 @@
-name,interesting_fact,orbit_time
-Mercury,"",""
-Venus,"",""
-Earth,"Best planet out there","1 year"
-Mars,"So called red planet","2 years"
+name,interesting_fact,orbit_time,average_temperature,type,average_distance
+Mercury,"Fact.","87d",300.0,"Rock planet",58
+Venus,"Fact.","224d",465.6,"Rock planet",108
+Earth,"Best planet out there.","365d",15.5,"Rock planet",149
+Mars,"So called red planet.","689d",-30.0,"Rock planet",227
+Jupiter,"Fact","11.89y",-150.0,"Gas giant",778
+Saturn,"Fact","29.46y",-180.0,"Gas giant",1426
+Uran,"Fact","84.01y",-210.0,"Gas giant",2970
+Neptune,"Fact","164,79y",-200.0,"Gas giant",4497

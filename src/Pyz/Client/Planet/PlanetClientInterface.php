@@ -2,6 +2,8 @@
 
 namespace Pyz\Client\Planet;
 
+use Generated\Shared\Transfer\PlanetTransfer;
+
 interface PlanetClientInterface {
     /**
      * @param string $name
@@ -9,5 +11,7 @@ interface PlanetClientInterface {
      * @return array
      */
     public function getPlanetByName(string $name): array;
+
+    public function getRecommendedPlanets(PlanetTransfer $data): array;
 
 }

@@ -105,7 +105,7 @@ class AttributeCartBasedBoostingQueryExpanderPlugin extends AbstractPlugin imple
             ->getProductStorageClient()
             ->getProductAbstractStorageData($itemTransfer->getIdProductAbstract(), Store::getInstance()->getCurrentLocale());
 
-        return isset($productData['attributes']['color']) ? $productData['attributes']['color'] : null;
+        return $productData['attributes']['color'] ?? null;
     }
 
     /**

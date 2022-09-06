@@ -17,9 +17,17 @@ class IndexController extends AbstractController {
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction() {
-        $searchResults = $this->getClient()->getPlanetByName('Venus');
+    public function indexAction(string $name) {
+        $searchResults = $this->getClient()->getPlanetByName($name);
 
-        var_dump($searchResults); die();
+        return $this->view(
+            [
+                'planet' => $searchResults,
+            ],
+            [],
+            '@Planet/views/index/index.twig'
+        );
     }
+
+
 }

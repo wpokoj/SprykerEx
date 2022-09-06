@@ -1,0 +1,19 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    planet: _view.planet
+} %}
+
+{% block content %}
+    {% for planet in data.planet %}
+    <div>
+        <div>Name: {{ planet.name }}</div>
+        <div>Interesting fact: {{ planet.interesting_fact | default('null') }}</div>
+        <div>Orbit time: {{ planet.orbit_time | default('null') }}</div>
+        <div>Average distance (mln km): {{ planet.average_distance | default('null') }}</div>
+        <div>Planet type: {{ planet.type | default('null') }}</div>
+        <div>Average temperature (Celsius): {{ planet.average_temperature | default('null') }}</div>
+    </div>
+        <br><br>
+    {% endfor %}
+{% endblock %}

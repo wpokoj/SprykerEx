@@ -2,7 +2,9 @@
 
 namespace Pyz\Client\Planet;
 
+use Generated\Shared\Transfer\PlanetTransfer;
 use Pyz\Client\Planet\Plugin\Elasticsearch\Query\PlanetQueryPlugin;
+use Pyz\Client\Planet\Plugin\Elasticsearch\Query\RecommendedPlanetQueryPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class PlanetFactory extends AbstractFactory {
@@ -15,6 +17,10 @@ class PlanetFactory extends AbstractFactory {
     public function createPlanetQueryPlugin(string $name) {
 
         return new PlanetQueryPlugin($name);
+    }
+
+    public function createRecommendPlanetQueryPlugin(PlanetTransfer $data): RecommendedPlanetQueryPlugin {
+        return new RecommendedPlanetQueryPlugin($data);
     }
 
     /**

@@ -8,6 +8,10 @@
         <column name="interesting_fact" type="VARCHAR" size="1023"/>
         <column name="orbit_time" type="VARCHAR" size="255" />
 
+        <column name="average_temperature" type="FLOAT" />
+        <column name="type" type="VARCHAR" size="255" />
+        <column name="average_distance" type="INTEGER" />
+
         <behavior name="event">
             <parameter name="pyz_planet_all" column="*"/>
         </behavior>
