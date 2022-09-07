@@ -73,9 +73,9 @@ class AttributeCartBasedBoostingQueryExpanderPlugin extends AbstractPlugin imple
     {
         $functionScoreQuery = new FunctionScore();
         // Define how the computed scores are combined for the used functions.
-        $functionScoreQuery->setScoreMode(FunctionScore::SCORE_MODE_MULTIPLY);
+        $functionScoreQuery->setScoreMode(FunctionScore::SCORE_MODE_SUM);
         // Define how the newly computed score is combined with the score of the query.
-        $functionScoreQuery->setBoostMode(FunctionScore::BOOST_MODE_MULTIPLY);
+        $functionScoreQuery->setBoostMode(FunctionScore::SCORE_MODE_SUM);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $color = $this->getProductColor($itemTransfer);

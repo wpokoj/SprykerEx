@@ -5,6 +5,15 @@
 } %}
 
 {% block content %}
+    <form method="get">
+        Distance (mln km): <input type="text" name="dist"><br>
+        Temperature (Celsius): <input type="text" name="temp"><br>
+        Type: <input type="text" name="type">(Gas giant / Rock planet)<br>
+        <input type="submit">
+    </form>
+
+    <br><br><br><br>
+
     {% for planet in data.planet %}
     <div>
         <div>Name: {{ planet.name }}</div>

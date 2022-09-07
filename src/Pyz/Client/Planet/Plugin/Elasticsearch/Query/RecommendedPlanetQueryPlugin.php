@@ -35,36 +35,13 @@ class RecommendedPlanetQueryPlugin implements QueryInterface, SearchContextAware
         $function = new FunctionScore( );
         $function->setScoreMode(FunctionScore::SCORE_MODE_AVERAGE);
         $function->setBoostMode(FunctionScore::SCORE_MODE_AVERAGE);
-        $function->addScriptScoreFunction(
-            new Script("
-            double bell(def x) {
-                return Math.exp(-(0.001f * x * x))
-            }
-            bell(doc.average_temperature.empty ? 1000000000 : doc.average_temperature.value)
-            ",
-            [
-                "inf" => 1000.0, // very large number
-            ])
-        );
 
-        $function->addScriptScoreFunction(
-            new Script("
-            double bell(def x) {
-                return Math.exp(-(0.001f * x * x))
-            }
-            100 * (doc.average_distance.empty ? 0 : doc.average_distance.value)
-            ",
-                [
-                    "inf" => 1000.0, // very large number
-                ])
-        );
 
         $function->setQuery($boolQuery);
 
-
-
-        //$this->boostSearchResultByType($boolQuery);
-        //$this->boostSearchResultByTemperature($boolQuery);
+        $this->boostSearchResultByType($function);
+        $this->boostSearchResultByTemperature($function);
+        $this->boostSearchResultByDistance($function);
 
         $query = (new Query())
             ->setQuery($function)
@@ -73,46 +50,76 @@ class RecommendedPlanetQueryPlugin implements QueryInterface, SearchContextAware
         return $query;
     }
 
-    protected function boostSearchResultByType(BoolQuery $boolQuery): void {
-        $type = $this->data->getType();
+    protected function boostSearchResultByType(FunctionScore $fn): void {
+        if(!($type = $this->data->getType())) {
+            return;
+        }
 
-        if (!$type) { return; }
+        var_dump($type);
 
-        $functionScoreQuery = new FunctionScore();
-        $functionScoreQuery->setScoreMode(FunctionScore::SCORE_MODE_MULTIPLY);
-        $functionScoreQuery->setBoostMode(FunctionScore::BOOST_MODE_MULTIPLY);
-
-
-        $filter = $this->createFulltextSearchQuery($type);
-        $functionScoreQuery->addFunction('weight', 20, $filter);
-        $boolQuery->addMust($functionScoreQuery);
+        $fn->addScriptScoreFunction(
+            (new Script("
+            doc.type.empty ? 0.0 : (doc.type.value == params.expected ? params.norm : 0.0)
+            "))
+                ->setParam('norm', 50.0)
+                ->setParam('expected', $type)
+        );
     }
 
-    protected function boostSearchResultByTemperature(BoolQuery $boolQuery): void {
-        $temp = $this->data->getAverageTemperature();
+    protected function boostSearchResultByTemperature(FunctionScore $fn): void {
 
-        if (!$temp) { return; }
+        if(($temp = $this->data->getAverageTemperature()) === null) {
+            return;
+        }
 
-        $functionScoreQuery = new FunctionScore();
-        $functionScoreQuery->setScoreMode(FunctionScore::SCORE_MODE_MULTIPLY);
-        $functionScoreQuery->setBoostMode(FunctionScore::BOOST_MODE_MULTIPLY);
+        //var_dump($temp);
 
-
-        $filter = $this->createFulltextSearchQuery($temp);
-        $functionScoreQuery->addFunction('field-value-factor', [
-            "field" => "average_temperature",
-            "factor" => 1.2,
-            "missing" => 1,
-        ]);
-        $boolQuery->addMust($functionScoreQuery);
+        $fn->addScriptScoreFunction(
+            (new Script(
+            $this->generatePainlessBellCurveFunction()
+            ."
+            params.norm * bell(
+                params.expected - (doc.average_temperature.empty ? params.inf : doc.average_temperature.value)
+            )
+            "))
+                ->setParam('inf', 1000000)
+                ->setParam('norm', 100.0)
+                ->setParam('expected', $temp)
+        );
     }
 
-    protected function createFulltextSearchQuery($searchString): Match {
-        // We search for color in the "full-text" and "full-text-boosted" fields.
-        $matchQuery = (new Match('type', $searchString));
+    protected function boostSearchResultByDistance(FunctionScore  $fn): void {
 
-        return $matchQuery;
+        if(!($dist = $this->data->getAverageDistance())) {
+            return;
+        }
+
+        var_dump($dist);
+
+        $fn->addScriptScoreFunction(
+            (new Script(
+            $this->generatePainlessBellCurveFunction()
+            ."
+            params.norm * bell(
+                params.expected - (doc.average_distance.empty ? params.inf : doc.average_distance.value)
+            )
+            "))
+                ->setParam('inf', 1000000)
+                ->setParam('norm', 100.0)
+                ->setParam('expected', $dist)
+        );
     }
+
+    protected function generatePainlessBellCurveFunction(): string {
+
+        return
+        "
+        double bell(def x) {
+            return Math.exp(-(0.00001f * x * x))
+        }
+        ";
+    }
+
 
     public function getSearchContext(): SearchContextTransfer {
         if (!$this->hasSearchContext()) {
