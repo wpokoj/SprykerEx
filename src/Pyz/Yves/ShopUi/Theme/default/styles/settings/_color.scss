@@ -1,3 +1,5 @@
+
+
 $setting-color-yellow: #ffbf1c;
 $setting-color-blue: #5e3dff;
 
@@ -8,6 +10,17 @@ $setting-color-gray-4: #555;
 $setting-color-gray-5: #444;
 $setting-color-gray-6: #333;
 $setting-color-black: #111;
+
+/**
+ * Defines the main background color. Usage: body and side-drawer background.
+ */
+$setting-color-bg: $setting-color-gray-6 !default;
+
+/**
+ * Defines the main color of text. Usage: default global text color.
+ */
+$setting-color-text: $setting-color-gray-1 !default;
+
 
 $setting-color-info: #f0ede6;
 

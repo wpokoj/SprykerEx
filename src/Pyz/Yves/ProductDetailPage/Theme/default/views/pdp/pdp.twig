@@ -69,6 +69,11 @@
                 },
             } only %}
 
+            {% widget 'PlanetWidget' args ['mercury'] only %}
+            {% nowidget %}
+                <h1>Nothing to see here!</h1>
+            {% endwidget %}
+
             <div class="col page-layout-main__sidebar-pdp">
                 {% include molecule('product-configurator', 'ProductDetailPage') with {
                     data: {

@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% define data = {
+    planet: _widget.planet
+} %}
+
+{% block body %}
+    {% include molecule('planet-box') with {
+        data: {name: data.planet.name}
+        } only %}
+{% endblock %}
+

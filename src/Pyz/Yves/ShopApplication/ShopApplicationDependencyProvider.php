@@ -7,6 +7,7 @@
 
 namespace Pyz\Yves\ShopApplication;
 
+use Pyz\Yves\PlanetWidget\Widget\PlanetWidget;
 use Pyz\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -180,6 +181,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             OrderCancelButtonWidget::class,
             CartAddProductAsSeparateItemWidget::class,
             AssetWidget::class,
+            PlanetWidget::class,
         ];
     }
 
